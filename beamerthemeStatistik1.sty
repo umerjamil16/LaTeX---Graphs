@@ -1,0 +1,99 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LexiCard, 05.02.2016
+
+\mode<presentation>
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom colors
+\definecolor{Sonderblock}{RGB}{149,206,51}       
+\definecolor{Standardblock}{RGB}{255,255,255}
+\definecolor{Hintergrund}{RGB}{119,166,200}
+\definecolor{Blocktitel}{RGB}{34,42,84} 
+\definecolor{Schattierung}{RGB}{81,81,81}
+\definecolor{Mengen}{RGB}{19,23,98}
+\definecolor{Hervorhebung}{RGB}{2,204,0}
+\definecolor{Hervorhebung_Block}{named}{yellow}
+\definecolor{lexicard1}{RGB}{255,108,0}
+\definecolor{lexicard2}{named}{gray}
+\definecolor{lexicard_bg}{named}{white}
+\definecolor{col_emph}{named}{red}
+
+\definecolor{col_plot1}{RGB}{51,153,0}
+\definecolor{col_plot2}{RGB}{204,0,51}
+
+\definecolor{col_plotfill1}{named}{cyan}
+\definecolor{col_plotfill2}{named}{orange}
+\definecolor{col_plotfill3}{named}{blue}
+
+\definecolor{Block0}{RGB}{34,42,84}
+\definecolor{Block1}{RGB}{2,204,0}			%{188,155,122} %  % grün
+\definecolor{Block2}{RGB}{10,65,218}		%{55,21,212}%{0,214,0} 	% blau
+\definecolor{Block3}{RGB}{127,59,6}			%{10,194,255} % {RGB}{153,26,0} % braun
+\definecolor{Block4}{RGB}{153,26,0}
+\definecolor{Blockexample}{RGB}{255,74,0}	%{255,71,10}
+
+\definecolor{Kasten1}{named}{gray}
+
+\setbeamercolor{background canvas}{bg=Hintergrund} 
+\setbeamercolor{Titelfarbe}{fg=white, bg=blue}
+\setbeamercolor{Balkenfarbe}{fg=black,bg=yellow}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom themes etc.
+\useinnertheme[shadow=true]{rounded}
+\useoutertheme{shadow}
+\setbeamercolor*{block body}{fg=black,bg=Standardblock}
+\setbeamercolor*{block title}{fg=white,bg=Blocktitel}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{navigation symbols}{}  % no navigation on a poster
+
+\setbeamertemplate{enumerate items}[default]
+\setbeamercolor{enumerate item}{ fg=black}
+\setbeamercolor{itemize item}{ fg=black}
+
+\setbeamertemplate{block begin}{
+  \vskip.75ex
+  \begin{beamercolorbox}[leftskip=1cm,colsep*=.75ex]{block title}%
+    \usebeamerfont*{block title}\insertblocktitle
+  \end{beamercolorbox}%
+  {\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5pt}}%
+  \usebeamerfont{block body}%
+  \begin{beamercolorbox}[colsep*=.75ex,sep=.75ex,vmode]{block body}%
+    \ifbeamercolorempty[bg]{block body}{\vskip-.25ex}{\vskip-.75ex}\vbox{}%
+}
+\setbeamertemplate{block end}{
+  \end{beamercolorbox}
+}
+
+\setbeamertemplate{blocks}[rounded][shadow=false]
+
+
+
+%\setbeamertemplate{headline}{  
+%  \leavevmode
+%\begin{textblock}{10}(1.65,0.5)
+%          \usebeamercolor{title in head/foot}{  {\fontsize{40}{48}\selectfont  \textcolor{white}{\textbf{\hspace{-1.5mm}\inserttitle}}}  }
+%\end{textblock}
+%
+%\begin{textblock}{17}(1.65,1.9)
+%          \usebeamercolor{title in head/foot}{  {\Large  \textcolor{white}{\textbf{\hspace{-1.5mm}\mysubtitle}}}  }
+%\end{textblock}
+%}
+
+\setbeamertemplate{footline}{
+  \begin{beamercolorbox}[wd=\paperwidth]{upper separation line foot}
+    \rule{0pt}{0pt}
+  \end{beamercolorbox}
+  
+  \begin{beamercolorbox}[ht=1\baselineskip,leftskip=1cm]{footline}%
+  \end{beamercolorbox}
+
+  \begin{beamercolorbox}[wd=\paperwidth]{lower separation line foot}
+    \rule{0pt}{2pt}
+  \end{beamercolorbox}
+}
+
+
+\mode<all>
+

@@ -1,0 +1,746 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% LexiCard, 03.05.2016
+
+\input{preamble_Statistik1}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{csvsimple}
+\usepackage{pgf-pie}
+\newlength{\xdim}
+\usepackage{pgfplotstable}
+%%for fig 7
+\usepackage{filecontents}
+%Data for Fig 7 [imp: c column scaled by 1000]
+%% All the Y-axis values are scaled by 1000 to remove the void '10^4' 
+\begin{filecontents*}{data.csv}
+a,c
+1, 11.43605 %eg. original value was 11436.05
+2, 11.32880
+3, 11.41962
+4, 11.34060
+5, 11.19715
+8, 11.06492
+9, 11.00129
+10, 11.26539
+11, 11.33278
+12, 11.19649
+15, 10.98497
+16, 11.04401
+17, 10.97801
+18, 11.10030
+19, 11.04010
+22, 11.46050
+23, 11.54254
+24, 11.47126
+25, 11.47313
+26, 11.49243
+29, 11.08320
+30, 10.94497
+\end{filecontents*}
+%end for fig 7
+
+\begin{document}
+%\csvautotabular{data2.csv}
+\setbeamertemplate{headline}{\leavevmode}
+\begin{frame}
+\headereven{2}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% P2 Block 1
+\begin{textblock}{19.1}(0.25,0.7)\vspace{-11pt}
+\setbeamercolor*{block title}{fg=white,bg=Block0}
+\setbeamercolor*{block body}{fg=black,bg=Block0!10}
+\begin{block}{\Huge Diagramme}
+
+
+\vspace{0.5cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 3 Minipages: (19.1-0.5)/3
+% Informationen zu Diagrammen s. http://www.bbc.co.uk/education/guides/z7xcwmn/revision/2
+% minipage 1
+\begin{minipage}[t][6.6cm][t]{6.2cm-3ex}\vspace{-3ex}
+%\begin{tikzpicture}
+%\node[font={\fontsize{9pt}{11}\selectfont}] at (2,1.35) {Kreis-/Tortendiagramm};
+%\hspace{0.6cm}
+%\node[anchor= north west, text width=4.75cm, align=left] at (-0.05,1.35) {
+%\begin{itemize}\itemsep0pt
+%\item Der Vollkreis repräsentiert alle Daten
+%\item  Tortenstücke  repräsentieren Anteile
+%\item  Flächenanteil = Anteil in den Daten 
+%\end{itemize}
+%};
+%\end{tikzpicture}
+%\vspace{0.2cm}
+
+\centering
+\begin{tikzpicture}[baseline]
+
+\node at (4.75/2,1.7){
+\begin{tikzpicture} [baseline, scale=.55]
+\pie [rotate = 188] 
+{
+%7.11/ES(20),
+%21.70/DE(61),
+%8.54/USA(24),
+%28.82/FR(81),
+%9.60/GB(27),
+%24.29/CA(68)
+11.4/DE(29),
+8.2/US(21),
+8.6/FR(22),
+23.9/GB(61),
+18.4/JP(47),
+19.2/CA(49),
+10.2/ES(26)
+} 
+\end{tikzpicture} 
+};
+
+
+\node[align=center,rounded corners = 3pt, draw, text width=1.4cm,anchor=north] (p2n1) at (4.3,0.4) {61 Mitarbeiter in GB $\approx$ 23.9\%};
+\draw[->] (p2n1) to [out=90, in =-110] (4.6,0.7);
+\node[anchor=west, align=left] at (0,-0.4) {(Mitarbeiter nach Ländern)};
+
+
+\node[font={\fontsize{9pt}{11}\selectfont}] at (4.75/2,4.2) {Kreis-/Tortendiagramm};
+
+
+\node[anchor= north , text width=4.75cm, minimum height=1cm, align=left,rounded corners = 3pt,draw,fill=Block0!25] at (4.75/2,-0.7) {
+\vspace{-1.5ex}
+\begin{itemize}\itemsep0pt
+\item Kreis = alle Daten (hier $N$=255)
+\item Tortenstücke = Anteile in Prozent 
+\item  Prozentanteil x $ 360^\circ $ = Winkel 
+\end{itemize}
+};
+\end{tikzpicture}
+
+
+
+\end{minipage}
+%
+\hspace{0.25cm}\hspace{1.5ex}
+% minipage 2
+\begin{minipage}[t][6.6cm][t]{6.2cm-3ex}\vspace{-3ex}
+
+\centering
+\begin{tikzpicture}
+ %%more info on page 112 of pgfplot manual
+\begin{axis}[height=3.75cm,width=4.75cm,
+ylabel style={overlay},yticklabel style={overlay},
+scale only axis, 
+axis lines = left,
+axis line style = very thick,
+axis on top, % damit die Balken nicht über die Achse reichen, s. http://tex.stackexchange.com/questions/168712/axis line style = very thick,
+xbar, xtick={0,10,20,30,40,50,60, 70},
+xmin=0,
+xmax=70,
+enlarge y limits=.15, % s. http://www.scriptscoop.net/t/99958316e56d/pgfplots-cyrillic-text-in-symbolic-x-coords.html (hier x und y tauschen)
+symbolic y coords={% von unten nach oben
+	ES, CA, JP,GB, FR, US, DE
+	},
+ytick=data,
+nodes near coords, 
+nodes near coords align={horizontal},
+bar shift=0pt,
+%bar width=3.4mm,
+axis background/.style={shade,bottom color=Kasten1!20,top color=Block1!20,shading angle=-45}]
+\addplot[fill=dbscan] coordinates {
+(29,{DE})	(26,{ES}) (49,{CA}) (47,{JP}) (61,{GB}) (22,{FR}) (21,{US}) 	
+};
+
+\end{axis}  
+
+
+\node[font={\fontsize{9pt}{11}\selectfont}] at (4.75/2,4.2) {Balkendiagramm};
+\node[anchor= north , text width=4.75cm, minimum height=1cm, align=left,rounded corners = 3pt,draw,fill=Block0!25] at (4.75/2,-0.7) {
+\vspace{-1.5ex}
+\begin{itemize}\itemsep0pt
+\item Liegendes Säulendiagramm
+\item Merkmalsausprägung auf der Y-Achse 
+\item  Häufigkeiten (abs./rel.) auf der X-Achse
+\end{itemize}
+};
+
+\node[anchor=east,xshift=2mm] at (4.75,-0.5) {Anz.\ Mitarbeiter};
+\node[align=center,rounded corners = 3pt, draw, text width=1.5cm,anchor=north] (p2n2) at (3.4,3.4) {61 Mitarbeiter in GB};
+\draw[->] (p2n2) to [out=-90, in =90] (61/70*4.75,2.1);
+\end{tikzpicture}
+
+
+\end{minipage}
+%
+% minipage 3
+\hspace{0.25cm}\hspace{1.5ex}
+\begin{minipage}[t][6.6cm][t]{6.2cm-3.2ex}\vspace{-3ex}
+\centering
+\begin{tikzpicture}
+\begin{axis}[scale only axis, ylabel style={overlay},yticklabel style={overlay}, 
+xlabel style={overlay},xticklabel style={overlay}, 
+ybar interval, %ylabel=$\hat f(x)$,%xlabel=Körpergröße,
+axis lines = left, every axis y label/.style={at=(current axis.above origin),below=1mm,anchor=north west},
+every axis x label/.style={at=(current axis.right of origin), right=2mm}, xmin= 155, xmax=195, ymax=0.06, ymin=0, 
+every axis y label/.style={at=(current axis.above origin),anchor=south},
+height=3.75cm, width=4.75cm,
+xtick={160,165,170,175,180,185,190}, xticklabels={160,165,170,175,180,185,190},
+ytick={0.01,0.02,0.03,0.04,0.05,0.06}, 
+yticklabels={0.01,0.02,0.03,0.04,0.05,0.06}, 
+scaled ticks=false, xticklabel style={xshift=-0.3cm},
+axis background/.style={shade,bottom color=Kasten1!20,top color=Block2!20,shading angle=-45},
+axis line style = very thick,axis on top,
+xmajorgrids=false % http://tex.stackexchange.com/questions/248807/draw-grid-lines-for-grouped-bar-chart-diagram
+]
+\addplot[col_plot2, fill=col_plot2!50, line width=1.5pt] coordinates
+	{(160,0.03)(165,0.04)(170,0.05) (175,0.04) (180,0.02)(185,0.02)(190,0)};
+%\draw [decorate, decoration={brace,amplitude=1.5pt,raise=1pt}] (150,520) -- (200,520);
+\end{axis}
+
+
+\node[font={\fontsize{9pt}{11}\selectfont}] at (4.75/2,4.2) {Histogramm};
+\node[anchor= north , text width=4.75cm, minimum height=1cm, align=left,rounded corners = 3pt,draw,fill=Block0!25] at (4.75/2,-0.7) {
+\vspace{-1.5ex}
+\begin{itemize}\itemsep0pt
+\item In Klassen eingeteilte stetige Daten
+\item Rechteckfläche = relative Häufigkeit
+\item Rechteckhöhe = (Häufigkeits-) Dichte
+\end{itemize}
+};
+
+
+\node[anchor=east,xshift=2mm] at (4.75,-0.5) {Körpergröße};
+\node[align=center,rounded corners = 3pt, draw, text width=1.7cm,anchor=north west] (p2n3) at (0.1,3.7) {Dichte = 0.05};
+\draw[->] (p2n3) to [out=-130, in =180] (1.7,5/6*3.75);
+\node[align=center,rounded corners = 3pt, draw, text width=1.45cm,anchor=north east] (p2n31) at (4.7,3.7) {Höhe x Breite = 0.25, d.h.\ 25\% der Befragten sind zwischen 170 und 175 cm groß};
+\draw[->] (p2n31) to [out=180, in =30] (2.1,2.7);
+\end{tikzpicture}
+\end{minipage}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% minipages 4-6
+% Minipage 4
+\begin{minipage}[t][6.6cm][t]{6.2cm-3ex}\vspace{-3ex}
+\centering
+\begin{tikzpicture}
+
+\begin{axis}[ylabel style={overlay},yticklabel style={overlay}, % s. http://texwelt.de/wissen/fragen/2997/wie-kann-ich-zwei-pgfplots-diagramme-ubereinander-ausrichten
+axis lines = middle,
+scale only axis,    
+axis y line*=none, height=3.75cm,width=4.75cm,
+axis x line*=none,
+xmin=0,
+xmax=5,
+xtick={1,2,3,4},
+xticklabels={2003,2004,2005,2006},
+ymin=-3,ymax=3,
+yticklabel={\pgfmathprintnumber\tick\%},axis line style = very thick,
+%nodes near coords,
+%title=Distribution Function in \%
+axis background/.style={shade,bottom color=Kasten1!20,top color=Block1!20,shading angle=-45}]
+\addplot[ybar,bar width=6mm,bar shift=-0in,fill=dbscan,draw=black]  coordinates{
+(1,1.5)
+(4,1.7)};
+\addplot [
+color=black,
+solid, 
+forget plot
+]
+table[row sep=crcr]{
+-.33 0\\
+12 0\\
+};
+\addplot[ybar,bar width=6mm,bar shift=0.0in,fill=findOptimalPartition,draw=black] plot coordinates{
+(2,-1)
+(3,-2.1)};
+
+\node[align=center,anchor=south] at (axis cs: 1,1.5) {1.5\%};
+\node[align=center,anchor=north] at (axis cs: 2,-1) {-1\%};
+\node[align=center,anchor=north] at (axis cs: 3,-2.1) {-2.1\%};
+\node[align=center,anchor=south] at (axis cs: 4,1.7) {1.7\%};
+
+
+
+\end{axis}
+\node[anchor=east,xshift=2mm] at (4.75,-0.5) {Umsatzwachstum};
+\node[align=center,rounded corners = 3pt, draw, text width=1.5cm,anchor=north ] (p2n4) at (4.75/2,3.5) {Im Jahr 2004 sank der Umsatz um 1\%};
+\draw[->] (p2n4) to [out=-90, in =90] (2/5*4.75,1.4);
+
+
+
+\node[font={\fontsize{9pt}{11}\selectfont}] at (4.75/2,4.2) {Säulendiagramm};
+\node[anchor= north , text width=4.75cm, minimum height=1cm, align=left,rounded corners = 3pt,draw,fill=Block0!25] at (4.75/2,-0.7) {
+\vspace{-1.5ex}
+\begin{itemize}\itemsep0pt
+\item Ausprägungen auf der X-Achse 
+\item Prozente/Anzahl auf der Y-Achse 
+\item Breite der Säulen ohne Bedeutung
+\end{itemize}
+};
+
+\end{tikzpicture}%
+
+\end{minipage}
+%
+\hspace{0.25cm}\hspace{1.5ex}
+% Minipage 5
+\begin{minipage}[t][6.2cm][t]{6.2cm-3ex}\vspace{-3ex}
+\centering
+\begin{tikzpicture}
+\begin{axis}[height=3.75cm,width=4.75cm,
+ylabel style={overlay},yticklabel style={overlay},
+scale only axis, 
+axis lines = left,
+axis line style = very thick,
+axis on top, % damit die Balken nicht über die Achse reichen, s. http://tex.stackexchange.com/questions/168712/axis line style = very thick,
+xbar, xtick={0,10,20,30,40,50,60, 70},
+xmin=0,
+xmax=70,
+enlarge y limits=.15, % s. http://www.scriptscoop.net/t/99958316e56d/pgfplots-cyrillic-text-in-symbolic-x-coords.html (hier x und y tauschen)
+symbolic y coords={% von unten nach oben
+	 ES, CA,JP,GB, FR, US, DE, 
+	},
+ytick=data,
+nodes near coords,
+every node near coord/.append style={anchor=east,xshift=0.75ex},
+%every node near coord/.append style={xshift=-1.5ex}, % http://tex.stackexchange.com/questions/270721/how-to-correct-nodes-near-coords-position-in-ybar-stacked
+%every node near coord/.append style={xshift=-15pt,yshift=-3pt,anchor=east},
+%nodes near coords align={horizontal},
+bar shift=0pt,
+%bar width=3.4mm,
+axis background/.style={shade,bottom color=Kasten1!20,top color=Block1!20,shading angle=-45},
+legend style={fill=none},
+legend pos=south east,
+%every axis y label/.style={at=(current axis.above origin),anchor=south},
+%every axis x label/.style={at=(current axis.right of origin),anchor=west},
+xbar stacked,
+%nodes near coords, nodes near coords align={horizontal}, Suche: tikz "xbar stacked" nodes
+%legend style={at={(0.8,0.2)},anchor=west, draw=none},
+%area legend,
+%y=5.77mm,
+%enlarge y limits={abs=0.626},
+%legend style={at={(1.2,0.5)},legend columns=-1
+%},
+%
+%http://tex.stackexchange.com/questions/125935/customizing-legend-in-pgfplots
+% den Parameter #1, musste man aus irgendeinem Grund entfernen...
+legend image code/.code={%
+                    \draw[draw=none] (0cm,-0.1cm) rectangle (0.3cm,0.1cm);
+                },  
+legend style={draw=none,at={(1.03,0.05)}, anchor=south east}]
+\addplot[fill=dbscan] coordinates {
+(29,{CA})  (13,{ES}) (36,{JP}) (56,{GB}) (4,{FR}) (17,{US}) (20,{DE})};
+\addplot[fill=red] coordinates {
+(20,{CA})  (13,{ES}) (11,{JP}) (5,{GB}) (18,{FR}) (4,{US}) (9,{DE})};
+%\legend{XXX, YYY}
+
+\legend{\strut Frauen, \strut Männer};
+%\legend{Far,Near}
+%\node[anchor=center] at (rel axis cs: 0.5,0.5) {Hallo};
+
+
+\end{axis}  
+%\node at (1,1) {Hallo};
+%\node[anchor=center] at (29/70*4.75,6.5/7*3.75) {Hallo};
+
+
+
+\node[font={\fontsize{9pt}{11}\selectfont}] at (4.75/2,4.2) {Gestapeltes Balkendiagramm};
+\node[anchor= north , text width=4.75cm, minimum height=1cm, align=left,rounded corners = 3pt,draw,fill=Block0!25] at (4.75/2,-0.7) {
+\vspace{-1.5ex}
+\begin{itemize}\itemsep0pt
+\item Mehrere Einzelwerte nebeneinander  
+\item Addieren sich zum Gesamtwert auf
+\item Visualisiert Gesamtzusammensetzung
+\end{itemize}
+};
+
+
+
+\node[anchor=east,xshift=2mm] at (4.75,-0.5) {Anz.\ Mitarbeiter};
+\node[align=center,rounded corners = 3pt, draw, text width=2.2cm,anchor=north east] (p2n2) at (4.7,3.7) {Insgesamt 61 Mitarbeiter in GB:  56 Frauen und 5 Männer};
+\draw[->] (p2n2) to [out=-90, in =90] (61/70*4.75,2.1);
+\end{tikzpicture}
+
+
+\end{minipage}
+%
+\hspace{0.25cm}\hspace{1.5ex}
+% Minipage 6
+\begin{minipage}[t][6.2cm][t]{6.2cm-3.2ex}\vspace{-3ex}
+\centering
+\begin{tikzpicture}
+\begin{axis}[scale only axis,  axis line style = very thick,
+ylabel style={overlay},yticklabel style={overlay}, xlabel style={overlay},xticklabel style={overlay}, 
+axis lines = left, every axis y label/.style={at=(current axis.above origin),anchor=south},
+every axis x label/.style={at=(current axis.right of origin),anchor=west},
+%xmin= 0, xmax=8, ymin=0,ymax=1, 
+height=3.75cm,width=4.75cm,
+xmin= 155, xmax=195, ymax=1.05, ymin=0, 
+ xtick={160,165,170,175,180,185,190}, xticklabels={160,,170,,180,,190},
+  ytick={0,0.2,0.4,0.6,0.8,1}, 
+yticklabels={0,0.2,0.4,0.6,0.8,1}, 
+scaled ticks=false, axis background/.style={shade,bottom color=Kasten1!20,top color=Block1!20,shading angle=-45}]
+\addplot+[ name path=A, mark size=1pt,mark options={solid},color=col_plot2, line width=1.5pt] coordinates 
+	{(150,0)(160,0)(165,0.15)(170,0.35) (175,0.60) (180,0.80)(185,0.90)(190,1)(200,1)};
+%ytick={0.2,0.4,0.6,0.8,1.0}, 
+%yticklabels={0.2,0.4,0.6,0.8,1.0}, 
+%scaled ticks=false,
+%xtick={1,2,3,4,5,6,7,8}, xticklabels={160, ,170, ,180, ,190, ,}, 
+%axis background/.style={shade,bottom color=Kasten1!20,top color=Block1!20,shading angle=-45},axis line style = very thick,axis on top]
+%\addplot[const plot, mark size=1pt, mark options={solid},color=col_plot2, line width=1.5pt]  coordinates
+%{(0,0) (1,0.15) (2,0.55) (3,0.6) (4,0.75) (5,0.95) (6,1) (7,1)};
+%\draw[->] (axis cs: 4,0.6) -- (axis cs: 0,0.6);
+\end{axis}
+\draw[dashed,] (4.75/2,0) -- (4.75/2,0.6/1.05*3.75);
+\draw[dashed,->] (4.75/2,0.6/1.05*3.75) -- (0,0.6/1.05*3.75);
+
+
+%adding node of some text
+\node[align=center,rounded corners = 3pt, draw, text width=1.5cm,anchor=north east] (p2n6) at (4.7,2.8) {60\% (=0.6) der Personen in der Stichprobe haben eine Körpergröße von höchstens 175 cm};
+\draw[->] (p2n6) to [out=-180, in =0] (2.5,0.6/1.05*3.75);
+\node[anchor=east,xshift=2mm] at (4.75,-0.5) {Körpergröße};
+
+
+
+\node[font={\fontsize{9pt}{11}\selectfont}] at (4.75/2,4.2) {Verteilungsfunktion};
+\node[anchor= north , text width=4.75cm, minimum height=1cm, align=left,rounded corners = 3pt,draw,fill=Block0!25] at (4.75/2,-0.7) {
+\vspace{-1.5ex}
+\begin{itemize}\itemsep0pt
+\item Y-Achse immer von 0 bis 1 (100\%)
+\item   Anteil der Werte in der Stichprobe, die kleiner als ein bestimmter X-Wert sind
+\end{itemize}
+};
+
+
+\end{tikzpicture}%
+\end{minipage}
+
+%%Minipage - 7
+% Minipage 6
+\begin{minipage}[t][6.2cm][t]{6.2cm-3ex}\vspace{-3ex}
+\centering
+\begin{tikzpicture}
+\pgfplotsset{every axis/.append style={
+extra description/.code={
+%\node[font={\fontsize{9pt}{11}\selectfont}] at (0.5,1.2) { Figure 9};
+%\node at (.1,1.15) {\textbullet xyz };
+%\node at (.1,1.1) {\textbullet xyz };
+}}%, every non boxed x axis/.append style={x axis line style==>} 
+} %%more info on page 112 of pgfplot manual
+\begin{axis}[scale only axis, ylabel style={overlay},yticklabel style={overlay},
+y label style={at={(axis description cs:0.18,.46)},rotate=0,anchor=south},
+x label style={at={(axis description cs:.46,.06)}},
+    ylabel={aufsummierter Anteil Einkommen},
+    xlabel={aufsummierter Anteil Bevölkerung},
+height=3.75cm,width=4.75cm,
+%xlabel=KÃ¶rpergrÃ¶Ã?e $X$, ylabel=Gewicht $Y$,
+axis lines = left, 
+%every axis y label/.style={at=(current axis.above origin),anchor=south},
+%  every axis x label/.style={at=(curreant axis.right of origin),anchor=west}, 
+%    x label style={at={(axis description cs:0.5,-0.01)},anchor=north},
+%    y label style={at={(axis description cs:-0,.5)},rotate=360,anchor=south},
+  xmin= 0, xmax=100, ymin = 0, ymax=100, 
+ xtick={0,25,50,75,100}, xticklabels={0,25,50,75,100},
+  ytick={0,25,50,75,100}, 
+yticklabels={0,25,50,75,100}, axis background/.style={shade,bottom color=Kasten1!20,top color=Block1!20,shading angle=-45},
+scaled ticks=false,]
+	%%regression line code, equation y=1.544x-204.77
+%%	\addplot[no markers,blue,samples=10,domain=0:100] {1*(x)-(0)};   
+%%	\addplot[no markers,blue,samples=10,domain=0:50] {.5*(x)-(0)};
+\draw (0,0) -- (100,100);
+%\draw (0,0) -- (10,2) -- (20,6) -- (30,10) -- (40,18) -- (50,25) -- (60,30) -- (70, 40) -- (80, 55) -- (90, 70) -- (100,100);
+\addplot[black,fill=black!1] table [x=x
+, y=y, col sep=comma] {data3.csv};
+
+\fill [fill=orange!25] (0,0) -- (100,100) -- (10,2) -- (0,0) -- cycle;
+\fill [fill=orange!25] (10,2) -- (100,100) -- (20,6) -- (10,2) -- cycle;
+\fill [fill=orange!25] (20,6) -- (100,100) -- (30,10) -- (20,6) -- cycle;
+\fill [fill=orange!25] (30,10) -- (100,100) -- (40,18) -- (30,10) -- cycle;
+\fill [fill=orange!25] (40,18) -- (100,100) -- (50,25) -- (40,18) -- cycle;
+\fill [fill=orange!25] (50,25) -- (100,100) -- (60,30) -- (50,25) -- cycle;
+\fill [fill=orange!25] (60,30) -- (100,100) -- (70,40) -- (60,30) -- cycle;
+\fill [fill=orange!25] (70,40) -- (100,100) -- (80,55) -- (70,40) -- cycle;
+\fill [fill=orange!25] (80,55) -- (100,100) -- (90,70) -- (80,55) -- cycle;
+\fill [fill=orange!25] (90,70) -- (100,100) -- (100,100) -- (90,70) -- cycle;
+
+\filldraw (0,0) circle (1.2pt);
+\filldraw (10,2) circle (1.2pt);
+\filldraw (20,6) circle (1.2pt);
+\filldraw (30,10) circle (1.2pt);
+\filldraw (40,18) circle (1.2pt);
+\filldraw (50,25) circle (1.2pt);
+\filldraw (60,30) circle (1.2pt);
+\filldraw (70,40) circle (1.2pt);
+\filldraw (80,55) circle (1.2pt);
+\filldraw (90,70) circle (1.2pt);
+\filldraw (100,100) circle (1.2pt);
+
+\node[font={\fontsize{4pt}{11}\selectfont}, align=center, text width=1cm,anchor=north] (f9n1) at (15,80) {Gleichverteilung};
+\draw[->] (f9n1) to [out=270, in =180] (55,55);
+
+\node[font={\fontsize{4pt}{11}\selectfont}, align=center, text width=1cm,anchor=north] (f9n1) at (80,25) {Ungleichheit};
+\draw[->] (f9n1) to [out=90, in =0] (60,37);
+
+\end{axis}
+
+%adding node of some text
+
+\node[font={\fontsize{9pt}{11}\selectfont}] at (4.75/2,4.2) {Figure 7};
+\node[anchor= north , text width=4.75cm, minimum height=1cm, align=left,rounded corners = 3pt,draw,fill=Block0!25] at (4.75/2,-0.7) {
+\vspace{-1.5ex}
+\begin{itemize}\itemsep0pt
+\item xyz
+\item   xyz
+\end{itemize}
+};
+\end{tikzpicture}%
+
+
+\end{minipage}
+%
+\hspace{0.25cm}\hspace{3.4ex}
+% Minipage 8
+\begin{minipage}[t][6.2cm][t]{6.2cm-3.2ex}\vspace{-3ex}
+\centering
+\begin{tikzpicture}
+\pgfplotsset{every tick label/.append style={font=\tiny},every axis/.append style={
+extra description/.code={
+%\node[font={\fontsize{9pt}{11}\selectfont}] at (0.5,1.2) { Figure 9};
+%\node at (.1,1.15) {\textbullet xyz };
+%\node at (.1,1.1) {\textbullet xyz };
+}}%, every non boxed x axis/.append style={x axis line style==>} 
+} %%more info on page 112 of pgfplot manual
+\begin{axis}[ymajorgrids, scale only axis, ylabel style={overlay},yticklabel style={overlay},
+height=3.75cm,width=4.75cm,
+%xlabel=KÃ¶rpergrÃ¶ÃŸe $X$, ylabel=Gewicht $Y$,
+axis lines = left, 
+y label style={at={(axis description cs:0.18,.46)},rotate=0,anchor=south},
+x label style={at={(axis description cs:.46,.06)}},
+    ylabel={Public Dept (\$U.S Billions)},
+    xlabel={Public Debt \% GDP},
+%every axis y label/.style={at=(current axis.above origin),anchor=south},
+%  every axis x label/.style={at=(curreant axis.right of origin),anchor=west}, 
+%    x label style={at={(axis description cs:0.5,-0.01)},anchor=north},
+%    y label style={at={(axis description cs:-0,.5)},rotate=360,anchor=south},
+   ymin= 0, ymax=350, xmin = 0, xmax=120, 
+ytick={0,50,100,150,200,250,300,350}, yticklabels={0,500,1000,1500,2000,2500,3000,3500},
+  xtick=    {0, 10,20,30,40,50,60, 70,80,   90,100,110,120}, 
+xticklabels={40,50,60,70,80,90,100,110,120,130,140,150,160},
+axis background/.style={shade,bottom color=Kasten1!20,top color=Block1!20,shading angle=-45},
+scaled ticks=false,]
+%$-20
+%\filldraw[color=red!5, fill=red!5, very thin](0,100) circle (.3cm);
+  \draw[fill=portugal] (53,21.4) circle [radius=0.15cm]; %Portugal
+  \draw[fill=ireland] (55,19.4) circle [radius=0.15cm]; %Ireland
+%  \draw[fill=iceland] (83,.25) circle [radius=0.05cm]; %Iceland
+  \draw[fill=italy] (79,244.5) circle [radius=.48cm]; %Greece
+  \draw[fill=greece] (103,43.6) circle [radius=0.25cm]; %Italy
+  \draw[fill=germany] (43,275.2) circle [radius=0.415cm]; %Germany
+  \draw[fill=spain] (20,82.1) circle [radius=0.3cm]; %spain
+  \draw[fill=france] (43,214.4) circle [radius=0.415cm]; %France
+  \draw[fill=uk] (36,170.8) circle [radius=0.38cm]; %UK
+%
+\end{axis}
+
+
+%adding node of some text
+\node[font={\fontsize{4pt}{4}\selectfont},align=center, text width=1.5cm,anchor=north east] (p2n611) at (3.98,2.95) {Italy \\ 119\% \\ \$2,445};
+\node[font={\fontsize{4pt}{4}\selectfont},align=center, text width=1.5cm,anchor=north east] (p2n611) at (2.55,3.22) {Germany \\ 83\% \\ \$2,752};
+\node[font={\fontsize{4pt}{4}\selectfont},align=center, text width=1.5cm,anchor=north east] (p2n611) at (2.55,2.67) {France \\ 83\% \\ \$2,114};
+\node[font={\fontsize{4pt}{4}\selectfont},align=center, text width=1.5cm,anchor=north east] (p2n611) at (2.27,2.12) {UK \\ 76\% \\ \$1,708};
+\node[font={\fontsize{4pt}{4}\selectfont},align=center, text width=1.5cm,anchor=north east] (p2n611) at (1.63,1.15) {Spain \\ 60\% \\ \$821};
+%\draw (3.8,.6) -- (3.6,.8);
+\draw[->]  (4.42,.8) -- (4.3,.7);
+\node[font={\fontsize{4pt}{4}\selectfont},align=center, text width=1.5cm,anchor=north east] (p2n611) at (5.34,1.3) {Greece \\ 143\% \\ \$436};
+\draw[->]  (3.4,.23)--(3.32,.1);
+\node[font={\fontsize{4pt}{4}\selectfont},align=center, text width=1.5cm,anchor=north east] (p2n611) at (4.35,.8) {Iceland \\ 123\% \\ \$15};
+\draw[->] (2.5,.44)--(2.35,.3) ;
+\node[font={\fontsize{4pt}{4}\selectfont},align=center, text width=1.5cm,anchor=north east] (p2n611) at (3.58,.9) {Ireland \\ 95\% \\ \$194};
+\draw[->]  (1.78,.27)--(1.9,.27);
+\node[font={\fontsize{4pt}{4}\selectfont},align=center, text width=1.5cm,anchor=north east] (p2n611) at (2.35,.63) {Portugal \\ 93\% \\ \$214};
+\draw[fill=iceland] (3.26,.02) circle [radius=0.05cm]; %Iceland
+\node[font={\fontsize{9pt}{11}\selectfont}] at (4.75/2,4.2) {Figure 8};
+\node[anchor= north , text width=4.75cm, minimum height=1cm, align=left,rounded corners = 3pt,draw,fill=Block0!25] at (4.75/2,-0.7) {
+\vspace{-1.5ex}
+\begin{itemize}\itemsep0pt
+\item xyz
+\item   xyz
+\end{itemize}
+};
+
+\end{tikzpicture}%
+\end{minipage}
+%
+\hspace{0.1cm}\hspace{-.4ex}
+% Minipage 8
+\begin{minipage}[t][6.2cm][t]{6.2cm-3.2ex}\vspace{-3ex}
+\centering
+\begin{tikzpicture}
+\pgfplotsset{every x tick label/.append style={font=\tiny}}
+\begin{axis}[scale only axis,name=popaxis,axis x line=left, 
+ height=3.75cm, width=2.085cm,
+    legend pos=south east,
+    xbar stacked,
+%legend style={at={(0.8,0.2)},anchor=west, draw=none},
+ytick=data,
+legend style={fill=none},
+legend pos=south east,
+axis line style={-},
+ytick pos=right,    ytick style={/pgfplots/on layer=axis foreground, very thin, black},
+xtick style={/pgfplots/on layer=axis foreground, very thin, black},   
+    yticklabel style={/pgfplots/on layer=axis foreground},
+    axis y line*=none,
+    axis x line*=bottom,
+    tick label style={font=\footnotesize},
+    label style={font=\footnotesize},
+    xtick={0,100,200,300,400,500,600,700,750},
+    xticklabels={0,100,200,300,400,500,600,700,},
+%    width=.9\textwidth,
+ ytick pos=left,
+ ytick align=center,
+    bar width=0.2mm, %change here
+ %   xlabel={Stacked Bar chart},
+  yticklabels={
+  ,,,,5,,,,,10,
+  ,,,,15,,,,,20,
+  ,,,,25,,,,,30,
+  ,,,,35,,,,,40,
+  ,,,,45,,,,,50,
+  ,,,,55,,,,,60,
+  ,,,,65,,,,,70,
+  ,,,,75,,,,,80,
+  ,,,,85,,,,,90,
+  ,,,,95,,,,,100,
+	},
+      xmin=0,
+    xmax=800,ytick align=center,
+    area legend,
+%    y=8mm,
+    enlarge y limits={abs=2.3},    ytick align=center,
+    %%alignment
+    %%Algnment ends here
+%    xshift=0.42239cm,
+    scale only axis, 
+    set layers,
+%ytick align=center,
+    clip=false,
+    axis on top,axis background/.style={shade,bottom color=Kasten1!20,top color=Block1!20,shading angle=-45}
+]
+%female section
+
+\addplot[gray1,fill=gray1] table [x=fem_grey1
+, y=y, col sep=comma] {data2.csv};
+\addplot[green1,fill=green1] table [x=fem_green1
+, y=y, col sep=comma] {data2.csv};
+\addplot[green2,fill=green2] table [x=fem_green2
+, y=y, col sep=comma] {data2.csv};
+\addplot[orange1,fill=orange1] table [x=fem_orange1
+, y=y, col sep=comma] {data2.csv};
+\addplot[orange2,fill=orange2] table [x=fem_orange2
+, y=y, col sep=comma] {data2.csv};
+
+%\legend{XXX, YYY}
+%legend image code/.code={%
+ %                   \draw[draw=none] (0cm,-0.1cm) rectangle (0.1cm,0.1cm);
+%                },  
+%legend style={draw=none,at={(1.03,0.05)}, anchor=south east}]
+%\legend{\strut Frauen, \strut Männer, \strut Umer};
+
+\end{axis}  
+%MALE sec start
+\begin{axis}[at={(popaxis.south west)},anchor=south east, 
+xtick style={/pgfplots/on layer=axis foreground, very thin, black},   
+  height=3.75cm, width=2.085cm,
+ axis x line=left,
+    axis y line=left,    ytick align=center,
+    ytick style={/pgfplots/on layer=axis foreground, very thin, black},
+    yticklabel style={/pgfplots/on layer=axis foreground},
+    scale only axis,scale only axis,x dir=reverse,xshift=-.58cm,
+    legend pos=south east,
+    xbar stacked,
+%legend style={at={(0.8,0.2)},anchor=west, draw=none},
+ytick=data,
+    axis y line*=none,    ytick align=center,
+    axis x line*=bottom,
+    tick label style={font=\footnotesize},
+    label style={font=\footnotesize},
+    xtick={0,100,200,300,400,500,600,700,750},
+    xticklabels={0,100,200,300,400,500,600,700,},
+%    width=.9\textwidth,
+    bar width=.2mm,
+%    xlabel={Stacked Bar chart},
+  yticklabels={
+  ,,,, ,,,,,,
+  ,,,, ,,,,,,
+  ,,,, ,,,,,,
+  ,,,, ,,,,,,
+  ,,,, ,,,,,,
+  ,,,, ,,,,,,
+  ,,,, ,,,,,,
+  ,,,, ,,,,,,
+  ,,,, ,,,,,,
+  ,,,,  ,,,,,,
+	},%21
+      xmin=0,
+    xmax=800,
+        area legend,    ytick pos=right,ytick align=center,
+    %y=8mm,
+    enlarge y limits={abs=2.3},
+    %yshift=2,
+    %%alignment
+    %%Algnment ends here
+%    xshift=0.42239cm,
+    scale only axis, 
+    set layers,    %enlarge x limits = {value=0.15,upper},
+%ytick align=center,
+    clip=false,
+    axis on top,    axis line style={-},axis background/.style={shade,bottom color=Kasten1!20,top color=Block1!20,shading angle=-45}
+]
+
+\addplot[gray1,fill=gray1] table [x=fem_grey1
+, y=y, col sep=comma] {data2.csv};
+\addplot[gray2,fill=gray2] table [x=male_grey2
+, y=y, col sep=comma] {data2.csv};
+\addplot[green1,fill=green1] table [x=fem_green1
+, y=y, col sep=comma] {data2.csv};
+\addplot[green2,fill=green2] table [x=male_green2
+, y=y, col sep=comma] {data2.csv};
+
+\addplot[orange1,fill=orange1] table [x=fem_orange1
+, y=y, col sep=comma] {data2.csv};
+\end{axis}  
+\fill[draw=orange1,color=orange1] (-2.60,3.5) rectangle (-2.55,3.7);
+\fill[draw=green1,color=green1] (-2.60,3.3) rectangle (-2.55,3.5);
+\fill[draw=gray1,color=gray1] (-2.60,3.1) rectangle (-2.55,3.3);
+\node[font={\fontsize{4pt}{4}\selectfont},anchor=east] at (-1.4,3.62) {65 and above};
+\node[font={\fontsize{4pt}{4}\selectfont},anchor=east] at (-1.86,3.4) {20 - 64};
+\node[font={\fontsize{4pt}{4}\selectfont},anchor=east] at (-2.08,3.2) {\textless20};
+\node[font={\fontsize{5pt}{5}\selectfont},anchor=east] at (2,-0.4) {Women(thousand)};
+\node[font={\fontsize{5pt}{5}\selectfont},anchor=east] at (-0.8,-0.4) {Men(thousand)};
+\node[font={\fontsize{9pt}{11}\selectfont}] at (-.2,4.2) {Figure 9};
+\node[anchor= north , text width=4.75cm, minimum height=1cm, align=left,rounded corners = 3pt,draw,fill=Block0!25] at (-0.4,-0.7) {
+\vspace{-1.5ex}
+\begin{itemize}\itemsep0pt
+\item xyz
+\item   xyz
+\end{itemize}
+};
+
+\end{tikzpicture}%
+\end{minipage}
+
+
+
+\end{block}
+\end{textblock}
+
+\end{frame}
+\end{document}

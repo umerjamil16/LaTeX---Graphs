@@ -1,0 +1,175 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LexiCard, 05.02.2016
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LexiCard, 05.02.2016
+
+\documentclass[final,hyperref={pdfpagelabels=false},xcolor=table]{beamer}
+\mode<presentation>{
+\usetheme{Statistik1}}
+\setbeamersize{text margin left=0cm,text margin right=0cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{grffile}
+\usepackage{german} 
+\usepackage[latin1]{inputenc} 
+\usepackage[T1]{fontenc} 
+\usepackage{amsmath,amsthm, amssymb, latexsym}
+\usepackage[orientation=portrait,size=a4,scale=1,debug]{beamerposter}  
+\usepackage{array,booktabs,tabularx}
+\usepackage{etex} 
+\usepackage{tikz}
+\usepackage{wrapfig}
+\usepackage{blindtext} 
+\usepackage{multirow}
+\usepackage{pgfplots}
+\usepackage{colortbl} 
+\usepackage{fancyvrb}
+\usepackage[ISBN=978-80-85955-35-4]{ean13isbn} 		% Barcode 
+%\usepackage[]{qrcode} 							% QR-Code 
+\usepackage{calc}
+\usepackage{graphicx}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{anyfontsize}
+
+
+\definecolor{spain}{RGB}{187,224,227}
+\definecolor{uk}{RGB}{255,255,0}
+\definecolor{france}{RGB}{255,128,128}
+\definecolor{germany}{RGB}{0,255,0}
+\definecolor{italy}{RGB}{153,153,255}
+\definecolor{greece}{RGB}{255,204,0}
+\definecolor{iceland}{RGB}{204,153,255}
+\definecolor{ireland}{RGB}{0,255,255}
+\definecolor{portugal}{RGB}{128,0,0}
+\definecolor{spain}{RGB}{187,224,227}
+
+%colors for figure9
+\definecolor{gray1}{RGB}{166,166,166}
+\definecolor{gray2}{RGB}{136,136,136}
+\definecolor{green1}{RGB}{101,166,89}
+\definecolor{green2}{RGB}{51,136,34}
+\definecolor{orange1}{RGB}{255,191,101}
+\definecolor{orange2}{RGB}{255,170,51}
+
+\definecolor{findOptimalPartition}{HTML}{D7191C}
+\definecolor{storeClusterComponent}{HTML}{FDAE61}
+\definecolor{dbscan}{HTML}{ABDDA4}
+\definecolor{constructCluster}{HTML}{2B83BA}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usetikzlibrary{fadings}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{shapes.arrows} \usetikzlibrary{shadows}
+\usetikzlibrary{tikzmark}
+%\usetikzlibrary{paths.ortho} 
+\usepgfplotslibrary{statistics}
+\usetikzlibrary{intersections}
+\usetikzlibrary{positioning}
+\usetikzlibrary{patterns}
+\usetikzlibrary{calc,shapes.multipart,arrows,decorations.pathmorphing,backgrounds,positioning,fit,petri}      
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tikzstyle{every picture}+=[remember picture]
+\tikzset{shadowed/.style={preaction={transform canvas={shift={(1pt,-1pt)}},draw=Kasten1!80,line width = 3pt}},} \tikzset{samples=100}
+\tikzset{declare function={gamma(\z)=
+    (2.506628274631*sqrt(1/\z) + 0.20888568*(1/\z)^(1.5) + 0.00870357*(1/\z)^(2.5) - (174.2106599*(1/\z)^(3.5))/25920 - (715.6423511*(1/\z)^(4.5))/1244160)*exp((-ln(1/\z)-1)*\z);},
+    declare function={gammapdf(\x,\k,\theta) = \x^(\k-1)*exp(-\x/\theta) / (\theta^\k*gamma(\k));}
+}
+\tikzset{declare function={student(\x,\n)= gamma((\n+1)/2.)/(sqrt(\n*pi) *gamma(\n/2.)) *((1+(\x*\x)/\n)^(-(\n+1)/2.));}}  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom parameters
+\setlength{\TPHorizModule}{10mm}
+\setlength{\TPVertModule}{\TPHorizModule}
+\textblockorigin{0mm}{0mm} % start everything near the top-left corner
+\TPshowboxesfalse
+\textblockcolour{} 
+\TPMargin{1.5mm} 
+
+\listfiles
+\graphicspath{{fig/}}
+ 
+\newlength{\columnheight}
+\setlength{\columnheight}{28cm}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Declare functions for pgf
+\pgfmathdeclarefunction{gauss}{2}{%
+  \pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
+}
+%
+\makeatletter
+\pgfmathdeclarefunction{invgauss}{2}{%    
+  \pgfmathln{#1}% <- might need parsing
+  \pgfmathmultiply@{\pgfmathresult}{-2}%
+  \pgfmathsqrt@{\pgfmathresult}%
+  \let\@radius=\pgfmathresult%
+  \pgfmathmultiply{6.28318531}{#2}% <- might need parsing
+  \pgfmathdeg@{\pgfmathresult}%
+  \pgfmathcos@{\pgfmathresult}%
+  \pgfmathmultiply@{\pgfmathresult}{\@radius}%
+}
+%
+\pgfmathdeclarefunction{randnormal}{0}{%
+  \pgfmathrnd@
+  \ifdim\pgfmathresult pt=0.0pt\relax%
+    \def\pgfmathresult{0.00001}%
+  \fi%
+  \let\@tmp=\pgfmathresult%
+  \pgfmathrnd@%
+  \ifdim\pgfmathresult pt=0.0pt\relax%
+    \def\pgfmathresult{0.00001}%
+  \fi
+  \pgfmathinvgauss@{\pgfmathresult}{\@tmp}%
+}
+\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom commands
+\makeatletter
+\newcommand{\manuallabel}[2]{\def\@currentlabel{#2}\label{#1}}  
+\makeatother
+
+\newcommand{\pphantom}{\textcolor{red}} %
+\newcommand\Warning{
+ \makebox[1.4em][c]{%
+ \makebox[0pt][c]{\raisebox{.1em}{\small!}}%
+ \makebox[0pt][c]{\color{red}\Large$\bigtriangleup$}}}%
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Header even pages
+\newcommand{\headereven}[1]{
+\begin{tikzpicture}[remember picture,overlay]
+\node [xshift=10.5cm,yshift=-1.5cm] at (current page.north west){
+\begin{tikzpicture}
+\shade[top color=Schattierung!80,bottom color=Hintergrund,shading angle=0]  (0,0) rectangle (21,3);
+\end{tikzpicture}
+};
+\end{tikzpicture}
+
+
+% Abschluss (Balken)
+\begin{tikzpicture}[remember picture,overlay]
+\node [xshift=9.8cm,yshift=-0.5cm] at (current page.north west){\begin{tikzpicture} % Achtung: Verschiebt den Mittelpunkt des Bildes, daher die seltsame Ma?angabe...
+%\fill[white] (0,0) rectangle (21,0.05);
+\draw[style=thick, white] (0,0) -- (19.1,0);
+\draw[style=thick, white] (0,-0.05) -- (19.1,-0.05);
+\end{tikzpicture}
+};
+\end{tikzpicture}
+
+
+
+% Seitenzahlen
+\begin{tikzpicture}[remember picture,overlay]
+\node [xshift=9.8cm,yshift=-0.25cm] at (current page.north west){\begin{tikzpicture} 
+\node (rect) at (4,2) [minimum width=0.5cm,minimum height=0.5cm,align=center,text=white] {-- #1 --};
+\end{tikzpicture}};
+\end{tikzpicture}
+
+}
